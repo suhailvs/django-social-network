@@ -31,6 +31,15 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.spl
 # Application definition
 
 INSTALLED_APPS = [
+    'activities',
+    'articles',
+    'authentication',
+    'core',
+    'feeds',
+    'messenger',
+    'questions',
+    'search',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
