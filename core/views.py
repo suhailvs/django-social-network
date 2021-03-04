@@ -1,4 +1,4 @@
-import os
+import os, json
 from PIL import Image
 
 from django.contrib.auth.models import User
@@ -7,11 +7,15 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings as django_settings
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models.functions import TruncDay
+from django.db.models import Count
 
 from core.forms import ProfileForm, ChangePasswordForm
 from feeds.models import Feed
 from feeds.views import FEEDS_NUM_PAGES, feeds
-
+from articles.models import Article, ArticleComment
+from questions.models import Question, Answer
+from activities.models import Activity
 
 def home(request):
     if request.user.is_authenticated:
@@ -34,19 +38,37 @@ def network(request):
 
 @login_required
 def profile(request, username):
-    page_user = get_object_or_404(User, username=username)
-    all_feeds = Feed.get_feeds().filter(user=page_user)
+    user = get_object_or_404(User, username=username)
+    all_feeds = Feed.get_feeds().filter(user=user)
     paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
     feeds = paginator.page(1)
-    from_feed = -1
-    if feeds:
-        from_feed = feeds[0].id
-    return render(request, 'core/profile.html', {
-        'page_user': page_user,
+
+    counts = {
+        'feeds': Feed.objects.filter(user=user).count(),
+        'article':Article.objects.filter(create_user=user).count(),
+        'article_comment':ArticleComment.objects.filter(user=user).count(),
+        'question':Question.objects.filter(user=user).count(),
+        'answer':Answer.objects.filter(user=user).count(),
+        'activity':Activity.objects.filter(user=user).count(),
+        # 'messages':Message.objects.filter(Q(from_user=user) | Q(user=user)).count(),
+    }
+
+    # Daily user activity
+    user_activity = Activity.objects.filter(user=user).annotate(day=TruncDay(
+            'date')).values('day').annotate(c=Count('id')).values('day', 'c')
+    dates, datapoints = zip(*[[a['c'], str(a['day'].date())] for a in user_activity]) if user_activity else ([],[])
+    data = {
+        'page_user': user,
+        'counts': counts,
+        'global_interactions': sum(counts.values()),  # noqa: E501
+        'bar_data': list(counts.values()),
+        'line_labels': json.dumps(datapoints),
+        'line_data': json.dumps(dates),
         'feeds': feeds,
-        'from_feed': from_feed,
-        'page': 1
-        })
+        'from_feed': feeds[0].id if feeds else -1  # pragma: no cover
+    }
+    return render(request, 'core/profile.html', data)
+
 
 @login_required
 def settings(request):

@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 
 from core import views as core_views
-from authentication import views as bootcamp_auth_views
+from authentication import views as custom_auth_views
 from activities import views as activities_views
 from search import views as search_views
 
@@ -32,7 +32,7 @@ urlpatterns = [
     # url(r'^login', auth_views.login, {'template_name': 'core/cover.html'}, name='login'),
     # url(r'^logout', auth_views.logout, {'next_page': '/'}, name='logout'),
     url(r'^$', core_views.home, name='home'),
-    url(r'^signup/$', bootcamp_auth_views.signup, name='signup'),
+    url(r'^signup/$', custom_auth_views.signup, name='signup'),
     url(r'^settings/$', core_views.settings, name='settings'),
     url(r'^settings/picture/$', core_views.picture, name='picture'),
     url(r'^settings/upload_picture/$', core_views.upload_picture, name='upload_picture'),

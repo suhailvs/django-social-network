@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.html import escape
 
+
 class Activity(models.Model):
     FAVORITE = 'F'
     LIKE = 'L'
@@ -25,7 +26,9 @@ class Activity(models.Model):
         verbose_name = 'Activity'
         verbose_name_plural = 'Activities'
 
-    def __unicode__(self):
+    
+
+    def __str__(self):
         return self.activity_type
 
 #    def save(self, *args, **kwargs):
@@ -78,7 +81,7 @@ class Notification(models.Model):
         verbose_name_plural = 'Notifications'
         ordering = ('-date',)
 
-    def __unicode__(self):
+    def __str__(self):
         if self.notification_type == self.LIKED:
             return self._LIKED_TEMPLATE.format(
                 escape(self.from_user.username),

@@ -7,9 +7,9 @@
 {% endblock head %}
 
 {% block body %}
-  <h1 class="logo"><a href="{% url 'home' %}">Bootcamp</a></h1>
+  <h1 class="logo"><a href="{% url 'home' %}">Django Social Network</a></h1>
   <div class="signup">
-    <h2>{% trans 'Sign up for Bootcamp' %}</h2>
+    <h2>{% trans 'Sign up for Django Social Network' %}</h2>
     <form action="{% url 'signup' %}" method="post" role="form">
       {% csrf_token %}
       {% for field in form.visible_fields %}

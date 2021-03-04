@@ -17,7 +17,7 @@ class Question(models.Model):
         verbose_name_plural = 'Questions'
         ordering = ('-update_date',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     @staticmethod
@@ -86,7 +86,7 @@ class Answer(models.Model):
         verbose_name_plural = 'Answers'
         ordering = ('-is_accepted', '-votes', 'create_date',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.description
 
     def accept(self):
@@ -134,5 +134,5 @@ class Tag(models.Model):
         unique_together = (('tag', 'question'),)
         index_together = [['tag', 'question'],]
     
-    def __unicode__(self):
+    def __str__(self):
         return self.tag

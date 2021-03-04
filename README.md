@@ -26,7 +26,7 @@ The Q&A app works just like Stack Overflow. You can mark a question as favorite,
 ## Technology Stack
 
 - Python 3.8
-- Django 1.9.4
+- Django 3.1.7
 - Twitter Bootstrap 3
 - jQuery 2
 
@@ -36,7 +36,6 @@ The Q&A app works just like Stack Overflow. You can mark a question as favorite,
 	python3 -m venv env
 	source env/bin/activate
 	pip install -r requirements.txt
-	./manage.py makemigrations
 	./manage.py migrate
 	./manage.py runserver
 
@@ -44,7 +43,7 @@ vist <http://localhost:8000>
 
 ## Demo
 
-Try Bootcamp now at [https://djangosocialnetwork.herokuapp.com][2].
+Try Django Social Network now at [https://djangosocialnetwork.herokuapp.com][2].
 
 [0]: https://www.python.org/
 [1]: https://www.djangoproject.com/

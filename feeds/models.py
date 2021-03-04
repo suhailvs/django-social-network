@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from activities.models import Activity
 from django.utils.html import escape
-#import bleach
+import bleach
 
 
 class Feed(models.Model):
@@ -19,7 +19,7 @@ class Feed(models.Model):
         verbose_name_plural = _('Feeds')
         ordering = ('-date',)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.post
 
     @staticmethod
@@ -68,4 +68,4 @@ class Feed(models.Model):
         return feed_comment
 
     def linkfy_post(self):
-        return '' #bleach.linkify(escape(self.post))
+        return bleach.linkify(escape(self.post))
