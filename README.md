@@ -33,6 +33,9 @@ The Q&A app works just like Stack Overflow. You can mark a question as favorite,
 
 ## Installation Guide
 
+	git clone https://github.com/suhailvs/django-social-network
+	cd django-social-network
+	cp .env.example .env
 	python3 -m venv env
 	source env/bin/activate
 	pip install -r requirements.txt
@@ -43,8 +46,19 @@ vist <http://localhost:8000>
 
 ## Demo
 
-Try Django Social Network now at [https://djangosocialnetwork.herokuapp.com][2].
+Try Django Social Network now at [https://suhail.herokuapp.com][2].
 
 [0]: https://www.python.org/
 [1]: https://www.djangoproject.com/
-[2]: https://djangosocialnetwork.herokuapp.com/
+[2]: https://suhail.herokuapp.com/
+
+## Heroku
+
+suhail.herokuapp.com
+
++ create and app at https://dashboard.heroku.com/apps/
++ click `Deploy` Tab -> Deploy method `Github`
++ Manual deploy, select `heroku` branch, click `Deploy Branch`
++ Install heroku `$ sudo snap install --classic heroku`
++ logs `$ heroku logs -a suhail` 
++ `$ heroku run -a suhail python manage.py migrate`

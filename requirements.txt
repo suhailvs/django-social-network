@@ -3,3 +3,9 @@ Markdown==3.3.4
 Pillow==8.1.0
 bleach==3.3.0
 python-decouple==3.4
+
+# heroku
+gunicorn
+dj-database-url 
+psycopg2
+whitenoise
