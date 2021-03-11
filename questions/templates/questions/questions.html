@@ -1,97 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load humanize %}
+{% load i18n %}
+
 {% block title %}Questions{% endblock %}
 
 {% block head %}
-  <link href="{% static 'css/codidact.css' %}" rel="stylesheet">
   <link href="{% static 'css/questions.css' %}" rel="stylesheet">
+  <script src="{% static 'js/questions.js' %}"></script>
 {% endblock head %}
 
 {% block main %}
-<!-- main -->
-<main class="container">
-  <div class="grid">
-    <div class="grid--cell is-8-lg is-12">
-      <div class="has-padding-4">
-        <div class="category--description open">
-          <div class="category--collapse">
-            <p>General Q&amp;A. This site does not give personal advice.</p>
-          </div>
-        </div>
-        <div class="has-color-tertiary-500 category-meta">
-          <div>
-            214 posts &middot;
-            <a class="button is-outlined" href="{% url 'ask' %}">Ask Question</a>
-          </div>
-
-          <div class="button-list is-gutterless has-margin-2">
-            <a class="button is-muted is-outlined{% if active == 'all' %} is-active{% endif %}" href="{% url 'all' %}">All</a>
-            <a class="button is-muted is-outlined{% if active == 'unanswered' %} is-active{% endif %}" href="{% url 'unanswered' %}">Unanswered</a>
-            <a class="button is-muted is-outlined{% if active == 'answered' %} is-active{% endif %}" href="{% url 'answered' %}">Answered</a>            
-          </div>
-        </div>
-
-        <div class="item-list">
-          {% for question in questions %}
-          <div class="item-list--item">
-            <div class="post-row">
-              <div class="box vote">
-                <div class="c">{{ question.favorites }}</div>
-                <div class="t">votes</div>
-              </div>
-              <div class="box{% if question.has_accepted_answer %} answered{% endif %}">
-                <div class="c">{{ question.get_answers_count }}</div>
-                <div class="t">answer</div>
-              </div>
-              <div class="box view">
-                <div class="c">28</div>
-                <div class="t">views</div>
-              </div>
-            </div>
-            <div class="item-list--text-value is-primary">
-              <div class="post-list--title">
-                <a href="{% url 'question' question.pk %}">{{ question.title }}</a>
-              </div>
-              <p class="has-color-tertiary-600 has-float-right post-list--meta">
-                <a dir="ltr" href="{% url 'profile' question.user.username %}">{{ question.user.profile.get_screen_name }}</a> asked <span>{{ question.update_date|naturaltime }}</span>
-              </p>
-              {% if question.get_tags %}
-              <div class="has-padding-top-2">
-                {% for tag in question.get_tags %}
-                  <a class="badge is-tag" href="#">{{ tag }}</a>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-          </div>
-          {% empty %}
-          <h4 class="no-data">No question to display</h4>
-          {% endfor %}
-          
-        </div>
-      </div>
-      {% include 'paginator.html' with paginator=questions %}
-    </div><!-- /grid--cell is-8-lg-->
-
-    <div class="grid--cell is-4-lg is-12">
-      <div class="widget has-margin-4 is-yellow">
-        <div class="widget--body">
-          <p>Like any library, this site offers tons of great information, but does not offer personalized, professional advice.</p>
-        </div>
-      </div>
-      <div class="widget has-margin-4">
-        <div class="widget--header">
-          <a class="widget--header-link" href="#">edit</a>
-          Subscribe to Questions
-        </div>
-        <div class="widget--body">
-          <p>You can subscribe to all new questions.</p>
-        </div>
-      </div>
-
-    </div>
+  <div class="page-header">
+    <a href="{% url 'ask' %}" class="btn btn-primary pull-right">
+      <span class="glyphicon glyphicon-bullhorn"></span> {% trans "Ask Question" %}
+    </a>
+    <h1>{% trans "Questions" %}</h1>
   </div>
-
-</main>
+  <div class="questions">
+    <ul class="nav nav-tabs" style="margin-bottom: 1.4em">
+      <li{% if active == 'unanswered' %} class="active"{% endif %}><a href="{% url 'unanswered' %}">{% trans "Unanswered" %}</a></li>
+      <li{% if active == 'answered' %} class="active"{% endif %}><a href="{% url 'answered' %}">{% trans "Answered" %}</a></li>
+      <li{% if active == 'all' %} class="active"{% endif %}><a href="{% url 'all' %}">{% trans "All Questions" %}</a></li>
+    </ul>
+    {% for question in questions %}
+      {% include 'questions/partial_question.html' with question=question %}
+    {% empty %}
+      <h4 class="no-data">{% trans "No question to display" %}</h4>
+    {% endfor %}
+    {% include 'paginator.html' with paginator=questions %}
+  </div>
 {% endblock main %}

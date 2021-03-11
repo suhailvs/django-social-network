@@ -50,7 +50,6 @@ Try Django Social Network now at [https://suhail.herokuapp.com][2].
 
 [0]: https://www.python.org/
 [1]: https://www.djangoproject.com/
-
 [2]: https://suhail.herokuapp.com/
 
 ## Heroku
@@ -63,4 +62,3 @@ suhail.herokuapp.com
 + Install heroku `$ sudo snap install --classic heroku`
 + logs `$ heroku logs -a suhail` 
 + `$ heroku run -a suhail python manage.py migrate`
-
