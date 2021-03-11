@@ -1,0 +1,31 @@
+<div class="post-meta--user">
+  <div class="post--author">
+    <div class="user-card">
+      <div class="user-card--avatar">
+        <img alt="user card" src="{{ user.profile.get_picture }}" height="48" width="48" class="has-float-left" />
+      </div>
+      <div class="user-card--content">
+        <a dir="ltr" class="user-card--link" href="{% url 'profile' user.username %}">{{ user.profile.get_screen_name }}</a>    
+        <div class="user-card--meta">
+          <span class="user-card--detail">
+            357 <span title="reputation">rep.</span>
+          </span>
+          <span class="user-card--break"></span>
+          <span class="user-card--detail">
+            <i class="far fa-fw fa-comment-alt" title="number of top-level posts"></i> 22
+          </span>
+          <span class="user-card--detail">
+            <i class="fas fa-fw fa-reply-all" title="number of answers"></i> 5
+          </span>
+          <span class="user-card--detail">
+            <i class="fas fa-fw fa-star-half-alt" title="sum of received votes (up minus down)"></i> 56
+          </span>
+          <span class="user-card--detail">
+            <i class="fas fa-fw fa-pen" title="number of edits made"></i> 2
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
