@@ -1,5 +1,13 @@
 $(function () {
-  $('#notifications').popover({html: true, content: 'Loading...', trigger: 'manual'});
+  // $('#notifications').popover({html: true, content: 'Loading...', trigger: 'manual'});
+  $('#notifications').popover({
+      animation: false,
+      html: true,
+      sanitize: false,
+      placement: 'bottom',
+      trigger: 'manual',
+      content: 'Loading...',
+  });
 
   $("#notifications").click(function () {
     if ($(".popover").is(":visible")) {
@@ -10,11 +18,11 @@ $(function () {
       $.ajax({
         url: '/notifications/last/',
         beforeSend: function () {
-          $(".popover-content").html("<div style='text-align:center'><img src='/static/img/loading.gif'></div>");
+          $(".popover-body").html("<div style='text-align:center'><img src='/static/img/loading.gif'></div>");
           $("#notifications").removeClass("new-notifications");
         },
         success: function (data) {
-          $(".popover-content").html(data);
+          $(".popover-body").html(data);
         }
       });
     }
