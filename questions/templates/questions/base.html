@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <link href="{% static 'css/codidact.css' %}" rel="stylesheet">
+  <link href="{% static 'css/questions.css' %}" rel="stylesheet">
+   {% block extrahead %}{% endblock %}
+  <style type="text/css">
+    /* Override navbar link showing underline in questions page*/
+    a.nav-link:link:hover, .navbar-brand:link:hover, .nav-item a:link:hover {
+      text-decoration: none !important;
+    }
+    .nav-item a:link:hover,.nav-item a {
+      color: black;
+    }
+  </style>
+{% endblock head %}
+
+
+{% block main %}
+<div class="grid">
+<div class="grid--cell is-8-lg is-12">
+  {% block grid8 %}{% endblock %}
+</div><!-- /grid--cell is-8-lg-->
+
+<div class="grid--cell is-4-lg is-12">
+  <div class="widget has-margin-4 is-yellow" style="margin-left:16px;margin-right:16px; margin-top:0">
+    <div class="widget--body">
+      <p>Like any library, this site offers tons of great information, but does not offer personalized, professional advice.</p>
+    </div>
+  </div>
+  <div class="widget has-margin-4">
+    <div class="widget--header">
+      <a class="widget--header-link" href="#">edit</a>
+      Subscribe to Questions
+    </div>
+    <div class="widget--body">
+      <p>You can subscribe to all new questions.</p>
+    </div>
+  </div>
+
+</div>
+</div>
+{% endblock main %}

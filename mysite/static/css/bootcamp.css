@@ -5,10 +5,6 @@
     padding-left: 1rem;
 }
 
-.navbar-light {
-    /*background-color: #f8f8f8;*/
-    border-color: #e7e7e7;
-}
 nav .navbar-brand {
   font-size: 1.4em;
   font-weight: 200;
@@ -16,7 +12,7 @@ nav .navbar-brand {
 }
 .navbar {
   padding: 0;
-  border: 1px solid transparent;
+  border-bottom: 4px solid #e9edc9;
 }
 
 .page-header {
@@ -33,15 +29,16 @@ nav .navbar-brand {
   text-align: center;
   padding: 1em 0;
 }
-li.nav-item:hover {
+li.nav-item a:hover {
   background-color: #ccc;
 }
+
 #notifications {
   /*font-size: 1.5em;*/
   /*padding: 13px;*/
   margin-left:10px;
   margin-right: 10px;
-  color: #dddddd;
+  color: #a5a58d;
 }
 
 #notifications.new-notifications {
