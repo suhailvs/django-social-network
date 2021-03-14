@@ -1,4 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Audiowide);
+
+.navbar-expand-md .navbar-nav .nav-link {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.navbar-light {
+    /*background-color: #f8f8f8;*/
+    border-color: #e7e7e7;
+}
 nav .navbar-brand {
   font-size: 1.4em;
   font-weight: 200;
@@ -6,6 +16,7 @@ nav .navbar-brand {
 }
 .navbar {
   padding: 0;
+  border: 1px solid transparent;
 }
 
 .page-header {
