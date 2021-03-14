@@ -5,60 +5,172 @@
 {% load humanize %}
 
 {% block head %}
+  <link href="{% static 'css/codidact.css' %}" rel="stylesheet">
   <link href="{% static 'css/questions.css' %}" rel="stylesheet">
+  <link href="{% static 'css/question.css' %}" rel="stylesheet">
+  <!-- <link rel="stylesheet" media="all" href="https://judaism.codidact.com/assets/application-c33f73628978ac098783b03669d1e2ddc6d4371771c68ed0c0c4c3570a90bbda.css" /> -->
+  <!-- <style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre&display=swap');
+    .post--body > *:not(div), .post-list--title, .post--title {
+        font-family: 'Frank Ruhl Libre', serif;
+    }
+   </style> -->
   <script src="{% static 'js/questions.js' %}"></script>
 {% endblock head %}
 
 {% block main %}
-  <ol class="breadcrumb">
-    <li><a href="{% url 'questions' %}">{% trans "Questions" %}</a></li>
-    <li class="active">{% trans "Question" %}</li>
-  </ol>
-  <div class="row question" question-id="{{ question.id }}">
-    {% csrf_token %}
-    <div class="col-md-1 options">
-      {% if user in question.get_favoriters %}
-        <span class="glyphicon glyphicon-star favorite favorited" title="Click to mark this question as favorite; click again to toggle"></span>
-      {% else %}
-        <span class="glyphicon glyphicon-star-empty favorite" title="Click to mark this question as favorite; click again to toggle"></span>
-      {% endif %}
-      <span class="favorite-count">{{ question.favorites }}</span>
+<main class="container">
+  <ul class="breadcrumb" style="margin:0px;">
+    <li><a href="{% url 'questions' %}">Questions</a></li>
+    <li class="active">Question</li>
+  </ul>
+  <div class="grid">
+    <div class="grid--cell is-8-lg is-12">
+      <div class="has-padding-4">
+        <div class="post" id="question-{{ question.id }}">
+          <h1 class="post--title has-border-top-width-4 has-border-top-style-solid has-border-color-primary-400 has-padding-2">
+            <span class="post--title-text">{{ question.title }}</span>
+          </h1>
+          <div class="post--container grid is-nowrap">
+            {% include 'questions/upvote_downvote.html' with upvote_count=2 downvote_count=1 %}
+
+            <div class="post--content has-padding-2">
+              <div class="post--body">
+                {{ question.get_description_as_markdown|safe }}
+                {% if question.get_tags %}
+                <div class="post--tags has-padding-2">
+                  {% for tag in question.get_tags %}
+                    <a class="badge is-tag" href="#">{{ tag }}</a>
+                  {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="post--meta flex-row jc-sb">
+                  <div class="post-meta--post">
+                    posted {{ question.update_date|naturaltime }}
+                  </div>
+                  {% include 'questions/user_badge.html' with user=question.user %}
+                </div>
+                <!-- comments -->
+                <div class="post--comments has-padding-4">
+                  <h4 class="has-margin-0">
+                    2 comments
+                    <span class="has-color-tertiary-500"></span>
+                  </h4>
+                  <div class="post--comments-container">
+
+                    <div class="comment " data-id="9199" id="comment-9199">
+                      <p class="comment--content">
+                        <span dir="ltr">Maybe it's on the day itself.
+                        </span>
+                        <span class="comment--meta">
+                          &mdash; <a dir="ltr" href="/users/53055">robev‭</a>
+                          <span class="text-muted" title="2021-02-27T21:11:18Z">5 days ago</span>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="post--comments-links has-margin-top-1">
+                    <a href="#" class="js-add-comment" data-post-id="280925">Add a comment</a>
+
+                    <form class="comment-form js-comment-form" action="/comments/new" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+                      <input value="280925" type="hidden" name="comment[post_id]" />
+
+                      <div class="form-group">
+                        <div class="form-group">
+                          <label for="comment_content">Your comment</label>
+                          <textarea class="form-element is-small js-comment-content" autocomplete="off" name="comment[content]"></textarea>
+                          <span class="has-float-right has-font-size-caption js-character-count" data-target=".js-comment-content" data-max="500">0 / 500</span>
+                        </div>
+                        <div class="actions">
+                          <input type="submit" name="commit" value="Post" class="button is-outlined" data-disable-with="Post" />
+                          <input type="button" name="discard-comment" value="Discard" class="button is-danger is-outlined" />
+                        </div>
+                      </div>
+                    </form>          
+                  </div>
+                </div>
+                <!-- /comments -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Answer
+      =========================================================================================
+       -->
+
+      <h2>1 answer</h2>
+
+      <div class="button-list is-gutterless has-float-right">
+        <a href="#" class="button is-muted is-outlined is-active">Score</a>
+        <a href="#" class="button is-muted is-outlined ">Active</a>
+      </div>
+      <div class="has-clear-clear"></div>
+      {% for answer in question.get_answers %}
+
+      <div class="post has-border-bottom-style-solid has-border-bottom-width-1 has-border-color-tertiary-100" id="answer-{{ answer.id }}">
+        <div class="post--container grid is-nowrap">
+        {% include 'questions/upvote_downvote.html' with upvote_count=answer.votes downvote_count=1 %}
+
+          <div class="post--content has-padding-2">
+            <div class="post--body">
+              {{ answer.get_description_as_markdown|safe }}
+              <div class="post--meta flex-row jc-sb">
+                <div class="post-meta--post">
+                  posted {{ answer.create_date|naturaltime }}
+                </div>
+                {% include 'questions/user_badge.html' with user=answer.user %}
+              </div>
+              <div class="post--actions">
+                <div class="tools">
+                  <a class="tools--item js-permalink" href="#">
+                    <i class="fa fa-link"></i> <span class="js-text">Permalink</span>
+                  </a>   
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      
+      <h2>Your Answer</h2>
+      <form action="{% url 'answer' %}" method="post" role="form">
+        {% csrf_token %}
+        {{ form.question }}
+        <div class="form-group">
+          {% include 'markdown_editor.html' with textarea='id_description' %}
+          {{ form.description }}
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Post Your Answer</button>
+        </div>
+      </form>
     </div>
-    <div class="col-md-11">
-      <h2>{{ question.title }}</h2>
-      <div class="question-user">
-        <a href="{% url 'profile' question.user.username %}"><img src="{{ question.user.profile.get_picture }}" class="user"></a>
-        <a href="{% url 'profile' question.user.username %}" class="username">{{ question.user.profile.get_screen_name }}</a>
-        <small class="asked">asked {{ question.update_date|naturaltime }}</small>
+
+    <div class="grid--cell is-4-lg is-12">
+      <div class="widget has-margin-4 is-yellow">
+        <div class="widget--body">
+          <p>Like any library, this site offers tons of great information, but does not offer personalized, professional advice.</p>
+        </div>
       </div>
-      <div class="question-description">
-        {{ question.get_description_as_markdown|safe }}
+      <div class="widget has-margin-4">
+        <div class="widget--header">
+          <img src="/assets/codidact.png" alt="Codidact logo" class="codidact-logo">
+        </div>
+        <div class="widget--body">
+          <p>
+            This community is part of the <a href="https://suhail.herokuapp.com">Django Social network</a>.
+          </p>
+        </div>
       </div>
-      {% if question.get_tag_list %}
-        <p>
-          {% for tag in question.get_tag_list %}
-            <span class="label label-primary">{{ tag }}</span>
-          {% endfor %}
-        </p>
-      {% endif %}
+
     </div>
   </div>
-  <h4 class="page-header">Answers</h4>
-  <div class="answers">
-    {% for answer in question.get_answers %}
-      {% include 'questions/partial_answer.html' with question=question answer=answer %}
-    {% endfor %}
-    <h4>Your Answer</h4>
-    <form action="{% url 'answer' %}" method="post" role="form">
-      {% csrf_token %}
-      {{ form.question }}
-      <div class="form-group">
-        {% include 'markdown_editor.html' with textarea='id_description' %}
-        {{ form.description }}
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary">{% trans "Post Your Answer"%}</button>
-      </div>
-    </form>
-  </div>
+</main>
 {% endblock main %}

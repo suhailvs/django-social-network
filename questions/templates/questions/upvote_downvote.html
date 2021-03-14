@@ -1,0 +1,21 @@
+
+  <div>
+    <div class="post--votes has-text-align-center" title="0.6">
+      <button class="vote-button button is-icon-only-button" aria-label="Upvote">
+        <svg width="2em" height="1.33em" viewbox="0 0 100 50">
+          <path d="M50,0 L100,50 L0,50 Z" fill="currentColor" />
+        </svg>
+      </button>
+      <div class="score has-font-size-subheading js-upvote-count">
+        +{{ upvote_count }}
+      </div>
+      <div class="score has-font-size-subheading js-downvote-count">
+        &minus;{{ downvote_count }}
+      </div>
+      <button class="vote-button button is-icon-only-button" aria-label="Downvote">
+        <svg width="2em" height="1.33em" viewbox="0 0 100 50">
+          <path d="M0,0 L100,0 L50,50 Z" fill="currentColor" />
+        </svg>
+      </button>
+    </div>
+  </div>
