@@ -1,4 +1,7 @@
-# Django Social Network
+# [Django Social Network][2]
+
+[![Python Version](https://img.shields.io/badge/python-3.6-brightgreen.svg)](https://python.org)
+[![Django Version](https://img.shields.io/badge/django-3.0-brightgreen.svg)](https://djangoproject.com)
 
 Django Social Network is an open source **enterprise social network** built with [Python][0] using the [Django Web Framework][1].
 
@@ -7,6 +10,8 @@ The project has three basic apps:
 * Feed (A Twitter-like microblog)
 * Articles (A collaborative blog)
 * Question & Answers (A Stack Overflow-like platform)
+
+## [Live Demo][2]
 
 ## Feed App
 
