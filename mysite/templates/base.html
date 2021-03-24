@@ -29,7 +29,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{% url 'home' %}">Django Social Network</a>
+              <a class="navbar-brand" href="{% url 'home' %}">Social Network</a>
             </div>
             <div class="collapse navbar-collapse" id="menu">
               <ul class="nav navbar-nav">
@@ -37,7 +37,7 @@
                 <li><a href="{% url 'feeds' %}">{% trans 'Feed' %}</a></li>
                 <li><a href="{% url 'articles' %}">{% trans 'Articles' %}</a></li>
                 <li><a href="{% url 'questions' %}">{% trans 'Q&A' %}</a></li>
-                <li><a href="{% url 'network' %}">{% trans 'Network' %}</a></li>
+                <li><a href="{% url 'users' %}">{% trans 'Users' %}</a></li>
               </ul>
               {% if not hide_search %}
                 <form class="navbar-form navbar-left" role="search" action="{% url 'search' %}">
