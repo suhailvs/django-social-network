@@ -17,11 +17,12 @@ from articles.models import Article, ArticleComment
 from questions.models import Question, Answer
 from activities.models import Activity
 
+
 def home(request):
     if request.user.is_authenticated:
         return feeds(request)
     else:
-        return render(request, 'core/cover.html')
+        return redirect('login')
 
 @login_required
 def network(request):
