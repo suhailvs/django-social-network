@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% load user_extras %}
+{% block title %}{% trans 'Users' %}{% endblock %}
+
+{% block main %}
+  <div class="page-header">
+    <h1>Users</h1>
+  </div>
+  <br>
+<form method='GET'>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="input-group">        
+        <input type="text" class="form-control" name='q' value='{{ request.GET.q }}' placeholder="Search for users...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit">Search...</button>
+        </span>
+      </div><!-- /input-group -->
+    </div>
+  </div>
+</form>
+<br>
+<div class="row">
+{% for user in users %}
+  <div class="col-sm-3">
+
+    <div class="media" style="margin-top: 10px">
+      <div class="media-left">
+      <a href="{% url 'profile' user.username %}">
+        <img class="mr-3" src="{{ user.email|gravatar_url:50 }}" alt="{{ user.profile.get_screen_name }}">
+      </a>
+      </div>
+      <div class="media-body" style="font-size: 12px">
+        <a href="{% url 'profile' user.username %}">{{ user.profile.get_screen_name }}</a><br>
+        <strong>Username:</strong> {{user.username}}<br>
+        {{user.email}}<br>
+        {% if user.profile.job_title %}
+          <strong>{% trans 'Job Title' %}:</strong> {{ user.profile.job_title }}<br>
+        {% endif %}
+        {% if user.profile.location %}
+          <strong>{% trans 'Location' %}:</strong> {{ user.profile.location }}<br>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="col-sm-6"><p class="text-warning">No users matched your search.</p></div>
+{% endfor %}
+</div>
+
+{% include 'paginator.html' with paginator=users %}
+{% endblock main %}

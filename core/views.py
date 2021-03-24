@@ -3,12 +3,14 @@ from PIL import Image
 
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.conf import settings as django_settings
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models.functions import TruncDay
-from django.db.models import Count
+from django.db.models import Count, Q
 
 from core.forms import ProfileForm, ChangePasswordForm
 from feeds.models import Feed
@@ -36,6 +38,26 @@ def network(request):
     except EmptyPage:
         users = paginator.page(paginator.num_pages)
     return render(request, 'core/network.html', { 'users': users })
+
+@method_decorator([login_required], name='dispatch')
+class UserList(ListView):
+    # model = get_user_model()
+    paginate_by = 36
+    template_name = 'core/users.html'
+    context_object_name = 'users'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q','')
+        queryset = User.objects.filter(is_active=True).order_by('username')
+        if query:
+            queryset = queryset.filter(
+                Q(username__icontains = query)|
+                Q(email__icontains = query)|
+                Q(first_name__icontains = query)|
+                Q(last_name__icontains = query)
+            )
+        return queryset
+
 
 @login_required
 def profile(request, username):
