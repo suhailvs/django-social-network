@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
-{% load user_extras %}
 {% block title %}{% trans 'Users' %}{% endblock %}
 
 {% block main %}
@@ -22,6 +21,11 @@
   </div>
 </form>
 <br>
+{% if request.GET.q %}
+<form method='GET'>
+  filtered users by <span class="label label-default">{{request.GET.q}}</span> <button class="btn btn-default btn-xs">clear filter</button>
+</form>
+{% endif %}
 <div class="row">
 {% for user in users %}
   <div class="col-sm-3">
@@ -29,7 +33,7 @@
     <div class="media" style="margin-top: 10px">
       <div class="media-left">
       <a href="{% url 'profile' user.username %}">
-        <img class="mr-3" src="{{ user.email|gravatar_url:50 }}" alt="{{ user.profile.get_screen_name }}">
+        <img src="{{ user.profile.get_picture }}" style="width:50px" alt="{{ user.profile.get_screen_name }}">
       </a>
       </div>
       <div class="media-body" style="font-size: 12px">
