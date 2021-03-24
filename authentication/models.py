@@ -26,17 +26,18 @@ class Profile(models.Model):
     def get_picture(self):
         no_picture = 'https://upload.wikimedia.org/wikipedia/commons/7/70/User_icon_BLACK-01.png'
         try:
-            filename = settings.MEDIA_ROOT + '/profile_pictures/' + self.user.username + '.jpg'
+            filename = settings.MEDIA_ROOT / 'profile_pictures' / f'{self.user.username}.jpg'
             picture_url = settings.MEDIA_URL + 'profile_pictures/' + self.user.username + '.jpg'
             if os.path.isfile(filename):
                 return picture_url
             else:
                 gravatar_url = u'http://www.gravatar.com/avatar/{0}?{1}'.format(
-                    hashlib.md5(self.user.email.lower()).hexdigest(),
-                    urllib.urlencode({'d':no_picture, 's':'256'})
+                    hashlib.md5(self.user.email.lower().encode('utf-8')).hexdigest(),
+                    urllib.parse.urlencode({'d':'identicon', 's':'256'})
                     )
                 return gravatar_url
-        except Exception:
+        except Exception as e:
+            print(e)
             return no_picture
 
     def get_screen_name(self):
