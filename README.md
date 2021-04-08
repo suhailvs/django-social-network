@@ -3,6 +3,8 @@
 [![Python Version](https://img.shields.io/badge/python-3.6-brightgreen.svg)](https://python.org)
 [![Django Version](https://img.shields.io/badge/django-3.0-brightgreen.svg)](https://djangoproject.com)
 
+This project is a fork of https://github.com/vitorfs/bootcamp
+
 Django Social Network is an open source **enterprise social network** built with [Python][0] using the [Django Web Framework][1].
 
 The project has three basic apps:

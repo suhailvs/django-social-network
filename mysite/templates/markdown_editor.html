@@ -1,6 +1,4 @@
 {% load static %}
-<script src="{% static 'js/jquery.selection.js' %}"></script>
-<script src="{% static 'js/bootcamp.markdown.js' %}"></script>
 
 <div class="markdown">
   <div class="modal fade" id="markdown_insert_link">
@@ -79,4 +77,6 @@
   </div>
   <button type="button" data-toggle="modal" data-target="#markdown_help" class="btn btn-link btn-sm pull-right"><span class="glyphicon glyphicon-question-sign"></span> Help</button>
 </div>
+<script src="{% static 'js/jquery.selection.js' %}"></script>
+<script src="{% static 'js/bootcamp.markdown.js' %}"></script>
 <script>$(function(){$("#{{ textarea }}").markdown();});</script>
